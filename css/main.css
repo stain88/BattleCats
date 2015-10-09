@@ -43,20 +43,6 @@ tfoot tr td{
   text-align: center;
 }
 
-.X, .O {
-  border-radius: 10px;
-}
-.X {
-  background: red;
-}
-.O {
-  background: blue;
-}
-
-.clear {
-  background: white;
-}
-
 #newGame {
   padding: 5px;
   width: 400px;
