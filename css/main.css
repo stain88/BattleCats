@@ -14,6 +14,7 @@ td {
 
 td:hover{
   cursor:pointer;
+  border-color: red;
 }
 
 /*td:first-child{
@@ -67,4 +68,8 @@ tfoot tr td{
 #newGame:hover{
   background: #b8bdee;
   border-color: white;
+}
+
+.placedShip {
+  background-color: gray;
 }
