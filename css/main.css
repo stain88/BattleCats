@@ -1,14 +1,35 @@
+.container {
+  width: 640px;
+  height: 480px;
+  margin: 0 auto;
+  text-align: center;
+  border: 1px solid gray;
+}
+
+button {
+  padding: 5px;
+  width: 200px;
+  font-size: 1.5em;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover{
+  background: #b8bdee;
+  border-color: white;
+}
+
 table {
   margin: 0 auto;
   border-radius:10px;
 }
 td {
-  border: 1px solid grey;
+  border: 1px solid gray;
   width: 50px;
   height: 50px;
   text-align: center;
   font-size: 8em;
-  box-sizing:border-box;
+  box-sizing: border-box;
   margin: 0;
 }
 
@@ -17,45 +38,11 @@ td:hover{
   border-color: red;
 }
 
-/*td:first-child{
-  border-left: none;
-}
-td:last-child{
-  border-right: none;
-}
-
-td:nth-child(2n+2){
-  border-right: none;
-  border-left: none;
-}
-
-thead tr td{
-  border-top:none;
-  border-bottom: none;
-}
-
-tfoot tr td{
-  border-top:none;
-  border-bottom: none;
-}
-*/
-.container, .whoseTurn {
+.whoseTurn {
   text-align: center;
 }
 
-#newGame {
-  padding: 5px;
-  width: 400px;
-  font-size: 1.5em;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-#newGame:hover{
-  background: #b8bdee;
-  border-color: white;
-}
-
-.placedShip {
-  background-color: gray;
+.placedCat {
+  background-image: url('../images/cat-face.png');
+  background-size: cover;
 }

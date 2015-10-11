@@ -29,8 +29,8 @@ function addListeners() {
   })
   .on("mousedown", function() {
     isMouseDown = true;
-    $(this).toggleClass("placedShip")
-    if ($(this).attr('class')==="placedShip") {
+    $(this).toggleClass("placedCat")
+    if ($(this).attr('class')==="placedCat") {
       selectedPlayerCells.push($(event.target).attr("data-num"));
     } else {
       selectedPlayerCells.splice(selectedPlayerCells.indexOf($(event.target).attr("data-num")),1);
@@ -38,9 +38,9 @@ function addListeners() {
   })
   .on("mouseover", function() {
     if (isMouseDown) {
-      $(this).toggleClass("placedShip")
+      $(this).toggleClass("placedCat")
       console.log($(event.target).attr("data-num").substr(4,2).split("").map(function(x){return parseInt(x,10)}));
-      if ($(this).attr('class')==="placedShip") {
+      if ($(this).attr('class')==="placedCat") {
         selectedPlayerCells.push($(event.target).attr("data-num"));
       } else {
         selectedPlayerCells.splice(selectedPlayerCells.indexOf($(event.target).attr("data-num")),1);
@@ -54,7 +54,12 @@ function addListeners() {
 }
 
 function startGame() {
+  event.preventDefault();
   $('td').off();
-  playerSelectionBoard.animate({transform: 'scale(0.5)'}).animate({transform: 'translateX(-400px) translateY(-100px) scale(0.5)'});
-  playerAttackBoard.show().fadeIn(1000);
+  playerSelectionBoard.animate({transform: 'scale(0.5)'}).animate({transform: 'translateX(-230px) translateY(-100px) scale(0.5)'}, addAttackBoard);
+}
+
+
+function addAttackBoard() {
+  playerAttackBoard.appendTo($('.gameSection')).fadeIn().animate({transform: 'translateY(-300px) translateX(40px)'});
 }
