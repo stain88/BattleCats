@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Battleships</title>
+  <title>BattleCats</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
   <script type="text/javascript" src="scripts/jquery.transform.js"></script>
   <script type="text/javascript" src="scripts/app.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
   <div class="container">
-    <button id="newGame">New Game</button>
-    <button id="startGame">Start Game</button>
-    <button id="instructions">How to Play</button>
-    <h2 class="whoseTurn">Place your cats</h2>
+    <h1>Battle Cats</h1>
+    <div class="menu-buttons">
+      <button id="newGame">New Game</button>
+      <button id="startGame">Start Game</button>
+      <button id="instructions">How to Play</button>
+      <button id="twoPlayer">Player</button>
+      <button id="computer">Computer</button>
+      <button id="restart">Restart</button>
+    </div>
+    <h2 class="whoseTurn">Place your cats. </h2>
     <div class="gameSection">
+      <p>Welcome to Battle Cats, a take on Battleships. Pick your opponent, place your cats on the board, and happy hunting!</p>
+      <button id="backToMain">Back to Main Menu</button>
       <table id="playerOneDefBoard">
         <tbody>
         </tbody>

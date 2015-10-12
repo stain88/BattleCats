@@ -1,3 +1,6 @@
+* {
+  font-family: 'Indie Flower', cursive;
+}
 .container {
   width: 640px;
   height: 480px;
@@ -6,17 +9,43 @@
   border: 1px solid gray;
 }
 
+.menu-buttons {
+  margin-top: 150px;
+}
+
 button {
   padding: 5px;
   width: 200px;
   font-size: 1.5em;
   border-radius: 10px;
   cursor: pointer;
+  display: block;
+  margin: 15px auto;
 }
 
 button:hover{
   background: #b8bdee;
   border-color: white;
+}
+
+.whoseTurn {
+  display: none;
+  text-align: center;
+}
+
+p {
+  width: 300px;
+  font-size: 20px;
+  margin: 0 auto;
+  display: none;
+}
+
+#playerOneDefBoard, #playerOneAtkBoard, #playerTwoDefBoard, #playerTwoAtkBoard {
+  display: none;
+}
+
+#startGame, #twoPlayer, #computer, #backToMain, #restart {
+  display: none;
 }
 
 table {
@@ -38,11 +67,13 @@ td:hover{
   border-color: red;
 }
 
-.whoseTurn {
-  text-align: center;
-}
-
 .placedCat {
   background-image: url('../images/cat-face.png');
   background-size: cover;
+}
+.hit {
+  background-color: rgba(255,0,0,0.4);
+}
+.miss {
+  background-color: rgba(128,128,128,0.7)
 }
