@@ -75,7 +75,6 @@ function drawBoards() {
 }
 
 function setupBoard(board) {
-  console.log(board,$(board[0]).attr("id"));
   var catsLeft = MAX_CATS;
   updateText(catsLeft);
   var isMouseDown = false;
@@ -112,7 +111,6 @@ function setupBoard(board) {
   })
   $('#startGame').on("click",function() {
     if (catsLeft===0) {
-      console.log($(board[0]).attr("id"))
       if ($(board[0]).attr("id")==="playerOneDefBoard") {
         (opponent === "Computer")?startGame():setupp2Board();
       } else {
@@ -190,7 +188,7 @@ function startGame() {
   setupComputerBoard();
   $('h2').fadeOut(200).text("Pick a square").fadeIn(200);
   $('#playerOneDefBoard').find('td').off();
-  $('#playerOneDefBoard').animate({transform: 'scale(0.5)'}).animate({transform: 'translateX(-230px) translateY(-62px) scale(0.5)'}, addAttackBoard);
+  $('#playerOneDefBoard').animate({transform: 'scale(0.5)'}).animate({transform: 'translate(-190px, -72px) scale(0.5)'}, addAttackBoard);
 }
 
 function setupComputerBoard() {
@@ -199,7 +197,6 @@ function setupComputerBoard() {
     var random = Math.floor(Math.random()*Math.pow(MAX_BOXES,2))
     var x=Math.floor(random/MAX_BOXES)+1;
     var y=(random%MAX_BOXES)+1;
-    console.log("random: "+random, "x: "+x,"y: "+y);
     if ($('#playerTwoDefBoard').find('tr:nth-child('+x+')').find('td:nth-child('+y+')').attr('class')==="placedCat") {
       continue;
     } else {
@@ -210,7 +207,7 @@ function setupComputerBoard() {
 }
 
 function addAttackBoard() {
-  $('#playerOneAtkBoard').fadeIn().animate({transform: 'translateY(-300px) translateX(40px)'});
+  $('#playerOneAtkBoard').fadeIn().animate({transform: 'translate(120px, -310px)'});
   $('#startGame').css('display', 'inline').fadeOut(500);
   $('#restart').css('display', 'inline').fadeIn(800);
   $('#restart').on("click",resetGame);
