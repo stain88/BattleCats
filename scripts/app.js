@@ -85,28 +85,26 @@ function setupBoard(board) {
     if ($(this).attr('class')==="placedCat") {
       $(this).toggleClass("placedCat");
       catsLeft++;
-      updateText(catsLeft);
     } else {
       if (catsLeft>0) {
         $(this).toggleClass("placedCat");
         catsLeft--;
-        updateText(catsLeft)
       }
     }
+    updateText(catsLeft)
   })
   .on("mouseover", function() {
     if (isMouseDown) {
       if ($(this).attr('class')==="placedCat") {
         $(this).toggleClass("placedCat");
         catsLeft++;
-        updateText(catsLeft);
       } else {
         if (catsLeft>0) {
           $(this).toggleClass("placedCat");
           catsLeft--;
-          updateText(catsLeft);
         }
       }
+      updateText(catsLeft);
     }
   })
   $(document).on("mouseup", function() {
@@ -116,10 +114,11 @@ function setupBoard(board) {
     if (catsLeft===0) {
       console.log($(board[0]).attr("id"))
       if ($(board[0]).attr("id")==="playerOneDefBoard") {
-        (opponent === "Computer")?startGame():setupp2Board();}
+        (opponent === "Computer")?startGame():setupp2Board();
       } else {
         prepareGame();
       }
+    }
   })
 }
 
