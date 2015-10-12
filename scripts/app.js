@@ -2,23 +2,27 @@ var MAX_BOXES = 6;
 var MAX_CATS = Math.floor(Math.pow(MAX_BOXES,2)/5);
 var p1CatsLeft = MAX_CATS;
 var p2CatsLeft = MAX_CATS;
-var selectedPlayerCells = [];
-var playerSelectionBoard;
-var playerAttackBoard;
-var computerSelectionBoard;
-var computerAttackBoard;
 var opponent;
 var turn = 1;
 var winner = null;
+var myPlayer = myPlayer || {};
 
 $(function() {
   $('#newGame').on('click',chooseOpponent);
   $('#instructions').on('click',showInstructions);
+  soundManager.setup({
+    url: "/swf/",
+    preferFlash: true,
+    onready: myPlayer.setup.bind(myPlayer)
+  })
 })
+
+myPlayer.setup = function() {
+
+}
 
 function chooseOpponent() {
   event.preventDefault();
-  console.log("starting new game");
   $('#newGame').fadeOut(500, function() {
     $('#instructions').fadeOut(500, function() {
       $('h1').append($(document.createElement('br'))).append($(document.createTextNode("Choose your opponent: ")))
@@ -52,7 +56,6 @@ function showInstructions() {
   event.preventDefault();
   $('#newGame').off();
   $('#instructions').off();
-  console.log("instructions");
   $('#newGame').fadeOut(500, function() {
     $('#instructions').fadeOut(500, function() {
       $('p').fadeIn(800);
@@ -77,17 +80,14 @@ function setupp1Board() {
   var isMouseDown = false;
   var startingCell;
   $('#playerOneDefBoard').find('td').on("mousedown", function() {
-    console.log(event.target);
     isMouseDown = true;
     if ($(this).attr('class')==="placedCat") {
       $(this).toggleClass("placedCat");
-      selectedPlayerCells.splice(selectedPlayerCells.indexOf($(event.target).attr("data-num")),1);
       catsLeft++;
       updateText(catsLeft);
     } else {
       if (catsLeft>0) {
         $(this).toggleClass("placedCat");
-        selectedPlayerCells.push($(event.target).attr("data-num"));
         catsLeft--;
         updateText(catsLeft)
       }
@@ -95,16 +95,13 @@ function setupp1Board() {
   })
   .on("mouseover", function() {
     if (isMouseDown) {
-      console.log($(event.target).attr("data-num").substr(4,2).split("").map(function(x){return parseInt(x,10)}));
       if ($(this).attr('class')==="placedCat") {
         $(this).toggleClass("placedCat");
-        selectedPlayerCells.splice(selectedPlayerCells.indexOf($(event.target).attr("data-num")),1);
         catsLeft++;
         updateText(catsLeft);
       } else {
         if (catsLeft>0) {
           $(this).toggleClass("placedCat");
-          selectedPlayerCells.push($(event.target).attr("data-num"));
           catsLeft--;
           updateText(catsLeft);
         }
@@ -128,7 +125,7 @@ function startGame() {
   setupComputerBoard();
   $('h2').fadeOut(200).text("Pick a square").fadeIn(200);
   $('#playerOneDefBoard').find('td').off();
-  $('#playerOneDefBoard').animate({transform: 'scale(0.5)'}).animate({transform: 'translateX(-230px) translateY(-80px) scale(0.5)'}, addAttackBoard);
+  $('#playerOneDefBoard').animate({transform: 'scale(0.5)'}).animate({transform: 'translateX(-230px) translateY(-62px) scale(0.5)'}, addAttackBoard);
 }
 
 function setupComputerBoard() {
@@ -139,7 +136,6 @@ function setupComputerBoard() {
     var y=(random%MAX_BOXES)+1;
     console.log("random: "+random, "x: "+x,"y: "+y);
     if ($('#playerTwoDefBoard').find('tr:nth-child('+x+')').find('td:nth-child('+y+')').attr('class')==="placedCat") {
-      console.log("same");
       continue;
     } else {
       $('#playerTwoDefBoard').find('tr:nth-child('+x+')').find('td:nth-child('+y+')').toggleClass("placedCat");
@@ -150,8 +146,8 @@ function setupComputerBoard() {
 
 function addAttackBoard() {
   $('#playerOneAtkBoard').fadeIn().animate({transform: 'translateY(-300px) translateX(40px)'});
-  $('#startGame').fadeOut(500);
-  $('#restart').fadeIn(800);
+  $('#startGame').css('display', 'inline').fadeOut(500);
+  $('#restart').css('display', 'inline').fadeIn(800);
   $('#restart').on("click",resetGame);
   $('#playerOneAtkBoard').find('td').on("click",playVsComp)
 }
@@ -161,6 +157,7 @@ function playVsComp() {
     if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
     var $choice = $('#playerTwoDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
+      playSound();
       $(event.target).addClass("hit");
       p2CatsLeft--;
       checkWinner();
@@ -168,7 +165,7 @@ function playVsComp() {
       $(event.target).addClass("miss");
     }
     turn*=-1;
-    setTimeout(computerPlay,500);
+    setTimeout(computerPlay,1000);
   } else {
     turn*=-1;
   }
@@ -180,6 +177,7 @@ function computerPlay() {
     box = getBox();
   }
   if (box.hasClass("placedCat")) {
+    playSound();
     box.toggleClass("placedCat hit");
     p1CatsLeft--;
   } else {
@@ -187,6 +185,14 @@ function computerPlay() {
   }
   turn*=-1;
   checkWinner();
+}
+
+function playSound() {
+  var sound = soundManager.createSound({
+    id: "cat",
+    url: "/sounds/cat_meow.mp3"
+  })
+  sound.play();
 }
 
 function getBox() {
@@ -238,6 +244,17 @@ function resetGame() {
 }
 
 function clearAll() {
-  console.log("removing");
-  $('table').find('td').remove();
+  window.location.reload();
+  // $('table').find('td').remove();
+  // p1CatsLeft = MAX_CATS;
+  // p2CatsLeft = MAX_CATS;
+  // $('#restart').fadeOut(500, function() {
+  //   $('h2').fadeOut(500, function() {
+  //     $('h1').text("Battle Cats").fadeIn(500);
+  //     $('#menu-buttons').toggleClass('menu-buttons');
+  //     $('#newGame').fadeIn(500, function() {
+  //       $('#instructions').fadeIn(500);
+  //     })
+  //   });
+  // })
 }
