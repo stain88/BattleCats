@@ -137,9 +137,15 @@ function setupp2Board() {
 
 function prepareGame() {
   $('h2').text("Player One's turn");
+  $('#startGame').css('display', 'inline').fadeOut(500);
+  $('#restart').css('display', 'inline').fadeIn(800);
+  $('#restart').on("click",resetGame);
   $('#playerTwoDefBoard').fadeOut(function() {
-    $('#playerOneAtkBoard').fadeIn().animate({transform: 'scale(0.7) translate(-200 -30)'}, function() {
-      $('#playerTwoAtkBoard').fadeIn().animate({transform: 'scale(0.7) translate(200, -449)'});
+    $('#playerOneAtkBoard').fadeIn().animate({transform: 'scale(0.7) translate(-200px, -30px)'}, function() {
+      $('#playerTwoAtkBoard').fadeIn().animate({transform: 'scale(0.7) translate(200px, -479px)'}, function() {
+          $('.gameSection').prepend($('<div />', {class:'arrow'})).fadeIn(500);
+          $('.arrow').animate({transform: 'translateX(-40px) rotate(35deg)'});
+      });
     });
   });
   $('#playerOneAtkBoard').find('td').on("click",playVsPlayer);
@@ -148,8 +154,8 @@ function prepareGame() {
 
 function playVsPlayer() {
   if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
-  console.log();
   if (turn===1) {
+    $('.arrow').animate({transform: 'translateX(40px) rotate(-35deg)'});
     if ($(event.target).closest($('table')).attr('id')==="playerTwoAtkBoard") return;
     var $choice = $('#playerTwoDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
@@ -163,6 +169,7 @@ function playVsPlayer() {
     turn*=-1;
     $('h2').text("Player Two's turn");
   } else {
+    $('.arrow').animate({transform: 'translateX(-40px) rotate(35deg)'});
     if ($(event.target).closest($('table')).attr('id')==="playerOneAtkBoard") return;
     var $choice = $('#playerOneDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
