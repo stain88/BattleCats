@@ -158,15 +158,43 @@ function addAttackBoard() {
 
 function playVsComp() {
   if (turn===1) {
-    var choice = $(event.target).attr("data-num");
-    if ($('#playerTwoDefBoard').find('td[data-num='+choice+']').hasClass("placedCat")) {
+    if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
+    var $choice = $('#playerTwoDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
+    if ($choice.hasClass("placedCat")) {
       $(event.target).addClass("hit");
       p2CatsLeft--;
+      checkWinner();
     } else {
       $(event.target).addClass("miss");
     }
+    turn*=-1;
+    setTimeout(computerPlay,500);
+  } else {
+    turn*=-1;
   }
+}
+
+function computerPlay() {
+  var box = getBox();
+  while (box.hasClass("hit")||box.hasClass("miss")) {
+    box = getBox();
+  }
+  if (box.hasClass("placedCat")) {
+    box.toggleClass("placedCat hit");
+    p1CatsLeft--;
+  } else {
+    box.addClass("miss")
+  }
+  turn*=-1;
   checkWinner();
+}
+
+function getBox() {
+  var compChoice = Math.floor(Math.random()*Math.pow(MAX_BOXES,2));
+  var x=Math.floor(compChoice/MAX_BOXES)+1;
+  var y=(compChoice%MAX_BOXES)+1;
+  var $box = $('#playerOneDefBoard').find('tr:nth-child('+x+')').find('td:nth-child('+y+')');
+  return $box;  
 }
 
 function checkWinner() {
