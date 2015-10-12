@@ -6,6 +6,7 @@ var opponent;
 var turn = 1;
 var winner = null;
 var myPlayer = myPlayer || {};
+// var kongregate;
 
 $(function() {
   $('#newGame').on('click',chooseOpponent);
@@ -153,8 +154,8 @@ function prepareGame() {
 function playVsPlayer() {
   if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
   if (turn===1) {
-    $('.arrow').animate({transform: 'translateX(40px) rotate(-35deg)'});
     if ($(event.target).closest($('table')).attr('id')==="playerTwoAtkBoard") return;
+    $('.arrow').animate({transform: 'translateX(40px) rotate(-35deg)'});
     var $choice = $('#playerTwoDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
       playSound();
@@ -167,8 +168,8 @@ function playVsPlayer() {
     turn*=-1;
     $('h2').text("Player Two's turn");
   } else {
-    $('.arrow').animate({transform: 'translateX(-40px) rotate(35deg)'});
     if ($(event.target).closest($('table')).attr('id')==="playerOneAtkBoard") return;
+    $('.arrow').animate({transform: 'translateX(-40px) rotate(35deg)'});
     var $choice = $('#playerOneDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
       playSound();
@@ -320,3 +321,8 @@ function clearAll() {
   //   });
   // })
 }
+
+// kongregateAPI.loadAPI(onComplete);
+// function onComplete() {
+//   kongregate = kongregateAPI.getAPI();
+// }
