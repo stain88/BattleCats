@@ -135,8 +135,8 @@ function setupComputerBoard() {
   var i=0;
   while (i<MAX_CATS) {
     var random = Math.floor(Math.random()*Math.pow(MAX_BOXES,2))
-    var x=Math.floor(random/MAX_BOXES);
-    var y=random%MAX_BOXES;
+    var x=Math.floor(random/MAX_BOXES)+1;
+    var y=(random%MAX_BOXES)+1;
     console.log("random: "+random, "x: "+x,"y: "+y);
     if ($('#playerTwoDefBoard').find('tr:nth-child('+x+')').find('td:nth-child('+y+')').attr('class')==="placedCat") {
       console.log("same");
@@ -161,9 +161,30 @@ function playVsComp() {
     var choice = $(event.target).attr("data-num");
     if ($('#playerTwoDefBoard').find('td[data-num='+choice+']').hasClass("placedCat")) {
       $(event.target).addClass("hit");
+      p2CatsLeft--;
     } else {
       $(event.target).addClass("miss");
     }
+  }
+  checkWinner();
+}
+
+function checkWinner() {
+  if (p2CatsLeft===0) {
+    if (opponent==="Computer") {
+      alert("You win! Congrats");
+    } else {
+      alert("Player One wins!");
+    }
+    resetGame(true);
+  }
+  if (p1CatsLeft===0) {
+    if (opponent==="Computer") {
+      alert("You lose! Unlucky");
+    } else {
+      alert("Player Two wins!");
+    }
+    resetGame(true);
   }
 }
 
