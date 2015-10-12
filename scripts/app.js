@@ -148,8 +148,10 @@ function prepareGame() {
 }
 
 function playVsPlayer() {
+  if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
+  console.log();
   if (turn===1) {
-    if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
+    if ($(event.target).closest($('table')).attr('id')==="playerTwoAtkBoard") return;
     var $choice = $('#playerTwoDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
       playSound();
@@ -162,7 +164,7 @@ function playVsPlayer() {
     turn*=-1;
     $('h2').text("Player Two's turn");
   } else {
-    if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
+    if ($(event.target).closest($('table')).attr('id')==="playerOneAtkBoard") return;
     var $choice = $('#playerOneDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
       playSound();
