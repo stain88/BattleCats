@@ -71,15 +71,16 @@ function drawBoards() {
       $('tbody').find('tr:last').append($('<td>',{'data-num':"cell"+i+j}));
     }
   }
-  setupp1Board();
+  setupBoard($('#playerOneDefBoard'));
 }
 
-function setupp1Board() {
+function setupBoard(board) {
+  console.log(board,$(board[0]).attr("id"));
   var catsLeft = MAX_CATS;
   updateText(catsLeft);
   var isMouseDown = false;
   var startingCell;
-  $('#playerOneDefBoard').find('td').on("mousedown", function() {
+  board.find('td').on("mousedown", function() {
     isMouseDown = true;
     if ($(this).attr('class')==="placedCat") {
       $(this).toggleClass("placedCat");
@@ -112,12 +113,68 @@ function setupp1Board() {
     isMouseDown = false;
   })
   $('#startGame').on("click",function() {
-    if (catsLeft===0) {(opponent === "Computer")?startGame():setupp2Board();}
+    if (catsLeft===0) {
+      console.log($(board[0]).attr("id"))
+      if ($(board[0]).attr("id")==="playerOneDefBoard") {
+        (opponent === "Computer")?startGame():setupp2Board();}
+      } else {
+        prepareGame();
+      }
   })
 }
 
 function updateText(cats) {
   $('h2').text("Place your cats. "+cats+" left.")
+}
+
+function setupp2Board() {
+  $('#playerOneDefBoard').find('td').off();
+  $('#playerOneDefBoard').fadeOut(function() {
+    $('#playerTwoDefBoard').fadeIn(function() {
+      setupBoard($('#playerTwoDefBoard'));
+    });
+  });
+}
+
+function prepareGame() {
+  $('h2').text("Player One's turn");
+  $('#playerTwoDefBoard').fadeOut(function() {
+    $('#playerOneAtkBoard').fadeIn().animate({transform: 'scale(0.7) translate(-200 -30)'}, function() {
+      $('#playerTwoAtkBoard').fadeIn().animate({transform: 'scale(0.7) translate(200, -449)'});
+    });
+  });
+  $('#playerOneAtkBoard').find('td').on("click",playVsPlayer);
+  $('#playerTwoAtkBoard').find('td').on("click",playVsPlayer);
+}
+
+function playVsPlayer() {
+  if (turn===1) {
+    if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
+    var $choice = $('#playerTwoDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
+    if ($choice.hasClass("placedCat")) {
+      playSound();
+      $(event.target).addClass("hit");
+      p2CatsLeft--;
+      checkWinner();
+    } else {
+      $(event.target).addClass("miss");
+    }
+    turn*=-1;
+    $('h2').text("Player Two's turn");
+  } else {
+    if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
+    var $choice = $('#playerOneDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
+    if ($choice.hasClass("placedCat")) {
+      playSound();
+      $(event.target).addClass("hit");
+      p1CatsLeft--;
+      checkWinner();
+    } else {
+      $(event.target).addClass("miss");
+    }
+    turn*=-1;
+    $('h2').text("Player One's turn");
+  }  
 }
 
 function startGame() {
@@ -210,7 +267,7 @@ function checkWinner() {
     } else {
       alert("Player One wins!");
     }
-    resetGame();
+    clearAll();
   }
   if (p1CatsLeft===0) {
     if (opponent==="Computer") {
@@ -218,7 +275,7 @@ function checkWinner() {
     } else {
       alert("Player Two wins!");
     }
-    resetGame();
+    clearAll();
   }
 }
 
