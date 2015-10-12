@@ -115,7 +115,7 @@ function setupp1Board() {
     isMouseDown = false;
   })
   $('#startGame').on("click",function() {
-    (opponent === "Computer")?startGame():setupp2Board();
+    if (catsLeft===0) {(opponent === "Computer")?startGame():setupp2Board();}
   })
 }
 
@@ -204,7 +204,7 @@ function checkWinner() {
     } else {
       alert("Player One wins!");
     }
-    resetGame(true);
+    resetGame();
   }
   if (p1CatsLeft===0) {
     if (opponent==="Computer") {
@@ -212,7 +212,7 @@ function checkWinner() {
     } else {
       alert("Player Two wins!");
     }
-    resetGame(true);
+    resetGame();
   }
 }
 
@@ -233,6 +233,11 @@ function backToMain() {
 function resetGame() {
   var r=confirm("Clear boards and start again?");
   if (r) {
-    console.log("start again");
+    clearAll();
   }
+}
+
+function clearAll() {
+  console.log("removing");
+  $('table').find('td').remove();
 }
