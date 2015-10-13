@@ -269,27 +269,30 @@ function getBox() {
 function checkWinner() {
   if (p2CatsLeft===0) {
     if (opponent==="Computer") {
-      alert("You win! Congrats");
+      gotoWinScreen("pvc")
     } else {
-      alert("Player One wins!");
+      gotoWinScreen("p1")
     }
-    clearAll();
   }
   if (p1CatsLeft===0) {
     if (opponent==="Computer") {
-      alert("You lose! Unlucky");
+      gotoWinScreen("comp")
     } else {
-      alert("Player Two wins!");
+      gotoWinScreen("p2")
     }
-    clearAll();
   }
 }
 
 function backToMain() {
   event.preventDefault();
+  clearAll();
   $('#backToMain').off();
   $('p').fadeOut(800, function() {
+    $('p').text("Welcome to Battle Cats, a take on Battleships. Pick your "+
+      "opponent, place your cats on the board, and happy hunting!");
     $('#backToMain').fadeOut(500, function() {
+      $('h1').text("Battle Cats").fadeIn(500);
+      $('#menu-buttons').addClass('menu-buttons');
       $('#newGame').fadeIn(500, function() {
         $('#instructions').fadeIn(500);
       })      
@@ -302,28 +305,46 @@ function backToMain() {
 function resetGame() {
   var r=confirm("Clear boards and start again?");
   if (r) {
-    clearAll();
+    backToMain();
   }
 }
 
+function gotoWinScreen(winner) {
+  $('.arrow').fadeOut(300);
+  $('table').fadeOut(300, function() {
+    $('h2').fadeOut(300);
+    $('#restart').fadeOut(300, function() {
+      switch (winner) {
+        case "comp":
+        $('p').text("You lose! Unlucky");
+        break;
+        case "pvc":
+        $('p').text("You win! Congratulations");
+        break;
+        case "p1":
+        $('p').text("Player One wins!");
+        break;
+        case "p2":
+        $('p').text("Player Two wins!");
+        break;
+      }
+      $('p').fadeIn(500, function() {
+        $('#backToMain').fadeIn(500).on("click", backToMain)
+      })
+    })
+  })
+}
+
 function clearAll() {
-  $('table').find('tr').remove();
+  $('table').find('tr').fadeOut();
+  $('.arrow').animate({transform:''}).fadeOut(100);
   $('button').off();
   p1CatsLeft = MAX_CATS;
   p2CatsLeft = MAX_CATS;
   $('table').animate({transform:''}).css('display', 'none');
   $('#restart').fadeOut(500, function() {
-    $('.arrow').animate({transform:''}).fadeOut();
-    $('h2').fadeOut(500, function() {
-      $('h1').text("Battle Cats").fadeIn(500);
-      $('#menu-buttons').toggleClass('menu-buttons');
-      $('#newGame').fadeIn(500, function() {
-        $('#instructions').fadeIn(500);
-      })
-    });
-  })
-  $('#newGame').on('click',chooseOpponent);
-  $('#instructions').on('click',showInstructions);
+    $('h2').fadeOut(500);
+  });
 }
 
 // kongregateAPI.loadAPI(onComplete);
