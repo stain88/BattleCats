@@ -288,7 +288,7 @@ function backToMain() {
   clearAll();
   $('#backToMain').off();
   $('p').fadeOut(800, function() {
-    $('p').text("Welcome to Battle Cats, a take on Battleships. Pick your "+
+    $('p').removeClass("menu-buttons").text("Welcome to Battle Cats, a take on Battleships. Pick your "+
       "opponent, place your cats on the board, and happy hunting!");
     $('#backToMain').fadeOut(500, function() {
       $('h1').text("Battle Cats").fadeIn(500);
@@ -328,7 +328,7 @@ function gotoWinScreen(winner) {
         $('p').text("Player Two wins!");
         break;
       }
-      $('p').fadeIn(500, function() {
+      $('p').addClass("menu-buttons").fadeIn(500, function() {
         $('#backToMain').fadeIn(500).on("click", backToMain)
       })
     })
