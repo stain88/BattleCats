@@ -6,7 +6,8 @@ var opponent;
 var turn = 1;
 var winner = null;
 var myPlayer = myPlayer || {};
-// var kongregate;
+var kongregate;
+localStorage.wins = localStorage.wins||btoa(0);
 
 $(function() {
   $('#newGame').on('click',chooseOpponent);
@@ -228,7 +229,7 @@ function playVsComp() {
       $(event.target).addClass("miss");
     }
     turn*=-1;
-    setTimeout(computerPlay,800);
+    if (p2CatsLeft!==0) setTimeout(computerPlay,800);
   } else {
     turn*=-1;
   }
@@ -270,6 +271,7 @@ function checkWinner() {
   if (p2CatsLeft===0) {
     if (opponent==="Computer") {
       gotoWinScreen("pvc")
+      localStorage.wins = btoa(parseInt(atob(localStorage.wins))+1)
     } else {
       gotoWinScreen("p1")
     }
@@ -319,7 +321,7 @@ function gotoWinScreen(winner) {
         $('p').text("You lose! Unlucky");
         break;
         case "pvc":
-        $('p').text("You win! Congratulations");
+        $('p').text("You win! You have now beaten the computer "+atob(localStorage.wins)+" time"+((parseInt(atob(localStorage.wins))===1)?".":"s."));
         break;
         case "p1":
         $('p').text("Player One wins!");
@@ -336,7 +338,7 @@ function gotoWinScreen(winner) {
 }
 
 function clearAll() {
-  $('table').find('tr').fadeOut();
+  $('table').find('tr').fadeOut().remove();
   $('.arrow').animate({transform:''}).fadeOut(100);
   $('button').off();
   p1CatsLeft = MAX_CATS;
@@ -347,7 +349,7 @@ function clearAll() {
   });
 }
 
-// kongregateAPI.loadAPI(onComplete);
-// function onComplete() {
-//   kongregate = kongregateAPI.getAPI();
-// }
+kongregateAPI.loadAPI(onComplete);
+function onComplete() {
+  kongregate = kongregateAPI.getAPI();
+}
