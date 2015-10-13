@@ -272,6 +272,7 @@ function checkWinner() {
     if (opponent==="Computer") {
       gotoWinScreen("pvc")
       localStorage.wins = btoa(parseInt(atob(localStorage.wins))+1)
+      kongregate.stats.submit("WinsVsComputer",parseInt(atob(localStorage.wins)));
     } else {
       gotoWinScreen("p1")
     }
