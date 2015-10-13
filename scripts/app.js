@@ -45,9 +45,9 @@ function playerOneSelect() {
   $('h1').fadeOut(1000);
   $('#twoPlayer').fadeOut(500,function() {
     $('#computer').fadeOut(500, function() {
-      $('.menu-buttons').toggleClass('menu-buttons');
+      $('#menu-buttons').toggleClass('menu-buttons');
       $('#startGame').fadeIn(1000);
-      $('.whoseTurn').fadeIn(1000);
+      $('h2').fadeIn(1000);
       $('#playerOneDefBoard').fadeIn(1000);
     });
   });
@@ -159,29 +159,31 @@ function playVsPlayer() {
     $('.arrow').animate({transform: 'translateX(40px) rotate(-35deg)'});
     var $choice = $('#playerTwoDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
+      $('h2').text("Player One hits! Player Two's turn")
       playSound();
       $(event.target).addClass("hit");
       p2CatsLeft--;
       checkWinner();
     } else {
+      $('h2').text("Player One misses! Player Two's turn")
       $(event.target).addClass("miss");
     }
     turn*=-1;
-    $('h2').text("Player Two's turn");
   } else {
     if ($(event.target).closest($('table')).attr('id')==="playerOneAtkBoard") return;
     $('.arrow').animate({transform: 'translateX(-40px) rotate(35deg)'});
     var $choice = $('#playerOneDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
+      $('h2').text("Player Two hits! Player One's turn")
       playSound();
       $(event.target).addClass("hit");
       p1CatsLeft--;
       checkWinner();
     } else {
+      $('h2').text("Player Two misses! Player One's turn")
       $(event.target).addClass("miss");
     }
     turn*=-1;
-    $('h2').text("Player One's turn");
   }  
 }
 
@@ -221,11 +223,13 @@ function playVsComp() {
     if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
     var $choice = $('#playerTwoDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
     if ($choice.hasClass("placedCat")) {
+      $('h2').text("Player hits!")
       playSound();
       $(event.target).addClass("hit");
       p2CatsLeft--;
       checkWinner();
     } else {
+      $('h2').text("Player misses!")
       $(event.target).addClass("miss");
     }
     turn*=-1;
@@ -241,10 +245,12 @@ function computerPlay() {
     box = getBox();
   }
   if (box.hasClass("placedCat")) {
+    $('h2').text("Computer hits!")
     playSound();
     box.toggleClass("placedCat hit");
     p1CatsLeft--;
   } else {
+    $('h2').text("Computer misses!")
     box.addClass("miss")
   }
   turn*=-1;
@@ -340,7 +346,7 @@ function gotoWinScreen(winner) {
 
 function clearAll() {
   $('table').find('tr').fadeOut().remove();
-  $('.arrow').animate({transform:''}).fadeOut(100);
+  $('.arrow').animate({transform:''}).fadeOut();
   $('button').off();
   p1CatsLeft = MAX_CATS;
   p2CatsLeft = MAX_CATS;
