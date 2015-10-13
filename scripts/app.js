@@ -228,7 +228,7 @@ function playVsComp() {
       $(event.target).addClass("miss");
     }
     turn*=-1;
-    setTimeout(computerPlay,1000);
+    setTimeout(computerPlay,800);
   } else {
     turn*=-1;
   }
@@ -307,19 +307,23 @@ function resetGame() {
 }
 
 function clearAll() {
-  window.location.reload();
-  // $('table').find('td').remove();
-  // p1CatsLeft = MAX_CATS;
-  // p2CatsLeft = MAX_CATS;
-  // $('#restart').fadeOut(500, function() {
-  //   $('h2').fadeOut(500, function() {
-  //     $('h1').text("Battle Cats").fadeIn(500);
-  //     $('#menu-buttons').toggleClass('menu-buttons');
-  //     $('#newGame').fadeIn(500, function() {
-  //       $('#instructions').fadeIn(500);
-  //     })
-  //   });
-  // })
+  $('table').find('tr').remove();
+  $('button').off();
+  p1CatsLeft = MAX_CATS;
+  p2CatsLeft = MAX_CATS;
+  $('table').animate({transform:''}).css('display', 'none');
+  $('#restart').fadeOut(500, function() {
+    $('.arrow').animate({transform:''}).fadeOut();
+    $('h2').fadeOut(500, function() {
+      $('h1').text("Battle Cats").fadeIn(500);
+      $('#menu-buttons').toggleClass('menu-buttons');
+      $('#newGame').fadeIn(500, function() {
+        $('#instructions').fadeIn(500);
+      })
+    });
+  })
+  $('#newGame').on('click',chooseOpponent);
+  $('#instructions').on('click',showInstructions);
 }
 
 // kongregateAPI.loadAPI(onComplete);
