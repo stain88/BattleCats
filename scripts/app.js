@@ -23,7 +23,7 @@ myPlayer.setup = function() {
 
 }
 
-function chooseOpponent() {
+function chooseOpponent(event) {
   event.preventDefault();
   $('#newGame').fadeOut(500, function() {
     $('#instructions').fadeOut(500, function() {
@@ -37,11 +37,11 @@ function chooseOpponent() {
   $('#computer').on("click",playerOneSelect);
 }
 
-function playerOneSelect() {
-  event.preventDefault();
+function playerOneSelect(event) {
+  event.preventDefault;
   $('#twoPlayer').off();
   $('#computer').off();
-  opponent = event.target.innerText;
+  opponent = event.target.innerText||event.target.textContent;
   $('h1').fadeOut(1000);
   $('#twoPlayer').fadeOut(500,function() {
     $('#computer').fadeOut(500, function() {
@@ -54,8 +54,8 @@ function playerOneSelect() {
   drawBoards();
 }
 
-function showInstructions() {
-  event.preventDefault();
+function showInstructions(event) {
+  event.preventDefault;
   $('#newGame').off();
   $('#instructions').off();
   $('#newGame').fadeOut(500, function() {
@@ -152,7 +152,7 @@ function prepareGame() {
   $('#playerTwoAtkBoard').find('td').on("click",playVsPlayer);
 }
 
-function playVsPlayer() {
+function playVsPlayer(event) {
   if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
   if (turn===1) {
     if ($(event.target).closest($('table')).attr('id')==="playerTwoAtkBoard") return;
@@ -187,8 +187,8 @@ function playVsPlayer() {
   }  
 }
 
-function startGame() {
-  event.preventDefault();
+function startGame(event) {
+  event.preventDefault;
   setupComputerBoard();
   $('h2').fadeOut(200).text("Pick a square").fadeIn(200);
   $('#playerOneDefBoard').find('td').off();
@@ -218,7 +218,7 @@ function addAttackBoard() {
   $('#playerOneAtkBoard').find('td').on("click",playVsComp)
 }
 
-function playVsComp() {
+function playVsComp(event) {
   if (turn===1) {
     if ($(event.target).hasClass("hit")||$(event.target).hasClass("miss")) return;
     var $choice = $('#playerTwoDefBoard').find('td[data-num='+$(event.target).attr("data-num")+']');
@@ -292,8 +292,8 @@ function checkWinner() {
   }
 }
 
-function backToMain() {
-  event.preventDefault();
+function backToMain(event) {
+  event.preventDefault;
   clearAll();
   $('#backToMain').off();
   $('p').fadeOut(800, function() {
