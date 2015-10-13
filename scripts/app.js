@@ -187,8 +187,8 @@ function playVsPlayer(event) {
   }  
 }
 
-function startGame(event) {
-  event.preventDefault;
+function startGame() {
+  event.preventDefault();
   setupComputerBoard();
   $('h2').fadeOut(200).text("Pick a square").fadeIn(200);
   $('#playerOneDefBoard').find('td').off();
@@ -292,7 +292,7 @@ function checkWinner() {
   }
 }
 
-function backToMain(event) {
+function backToMain() {
   event.preventDefault;
   clearAll();
   $('#backToMain').off();
