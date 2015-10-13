@@ -354,6 +354,7 @@ function clearAll() {
   $('#restart').fadeOut(500, function() {
     $('h2').fadeOut(500);
   });
+  turn = 1;
 }
 
 kongregateAPI.loadAPI(onComplete);
